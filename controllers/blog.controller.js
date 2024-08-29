@@ -2,11 +2,11 @@
 const Blog = require("../modal/Blog")
 
 exports.getAllBlog = async (req, res) => {
-    const result = await Blog.find()
+    const result = await Blog.create()
     res.json({ message: "todo fetch success", result })
 }
 exports.addBlog = async (req, res) => {
-    await Blog.create(req.body)
+    await Blog.find(req.body)
     res.json({ message: "todo add success" })
 }
 exports.updateBlog = async (req, res) => {

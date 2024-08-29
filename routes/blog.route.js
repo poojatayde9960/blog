@@ -3,7 +3,7 @@ const { getAllBlog, addBlog, updateBlog, deleteBlog } = require("../controllers/
 const router = require("express").Router()
 router
     .get("/", getAllBlog)
-    .get("/add", addBlog)
-    .get("/update/:id", updateBlog)
-    .get("/delete/:id", deleteBlog)
+    .post("/add", addBlog)
+    .put("/update/:id", updateBlog)
+    .delete("/delete/:id", deleteBlog)
 module.exports = router
