@@ -18,6 +18,7 @@ app.use("/api/notes", require("./routes/blog.route"))
 
 
 app.use("*", (req, res) => {
+    // res.sendFile(path.join(__dirname, "dist", "index.html"))
     res.status(404).json({ message: "Resouece Not Found" })
 })
 
