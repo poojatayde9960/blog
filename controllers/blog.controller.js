@@ -1,19 +1,26 @@
-
+const asyncHandler = require("express-async-handler")
 const Blog = require("../modal/Blog")
+const { io } = require("../socket/socket")
+// const {io}=require("../socket/socket")
 
-exports.getAllBlog = async (req, res) => {
-    const result = await Blog.create()
-    res.json({ message: "todo fetch success", result })
-}
-exports.addBlog = async (req, res) => {
-    await Blog.find(req.body)
-    res.json({ message: "todo add success" })
-}
+exports.getAllBlog = asyncHandler(async (req, res) => {
+
+    const result = await Blog.find()
+    res.json({ message: "blog fetch success", result })
+})
+exports.addBlog = asyncHandler(async (req, res) => {
+    await Blog.create(req.body)
+    const result = await Blog.find()
+    io.emit("blog-create-responce", result)
+    res.json({ message: "blog add bsuccess", result })
+})
 exports.updateBlog = async (req, res) => {
-    await Blog.findByIdAndUpdate(req.params.id, req.body)
-    res.json({ message: "todo update success" })
+    const result = await Blog.findByIdAndUpdate(req.params.id, req.body)
+    res.json({ message: "blog update success" })
 }
-exports.deleteBlog = async (req, res) => {
+exports.deleteBlog = asyncHandler(async (req, res) => {
     await Blog.findByIdAndDelete(req.params.id)
-    res.json({ message: "todo delete success" })
-}
+    const result = await Blog.find()
+    io.emit("todo-create-responce", result)
+    res.json({ message: "blog delete success" })
+})
